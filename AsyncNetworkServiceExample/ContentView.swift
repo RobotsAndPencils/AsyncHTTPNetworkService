@@ -55,11 +55,15 @@ class GiphyViewModel: ObservableObject {
         self.asyncService = service
     }
     
-    func fetchGif() {
-        self.url = nil
+    nonisolated func fetchGif() {
         Task {
-            self.url = try await asyncService.getRandomGif(tag: "blow kiss")
+            let fetchedURL = try await asyncService.getRandomGif(tag: "blow kiss")
+            await updateURL(fetchedURL)
         }
-     }
+    }
+    
+    func updateURL(_ url: URL?) async {
+        self.url = url
+    }
 }
 

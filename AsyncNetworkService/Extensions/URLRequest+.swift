@@ -49,7 +49,7 @@ public extension URLSession {
                         
                         guard let task = dataTask else { return }
                         guard let date = objc_getAssociatedObject(task, &networkRequestObserverStartDateKey) as? Date else { return }
-                        guard let response = response as? HTTPURLResponse else { return }
+                        guard let response = response as? HTTPURLResponse else { return continuation.resume(throwing: NetworkError.noDataInResponse) }
                         
                         let elapsedTime = Date().timeIntervalSince(date)
                         
