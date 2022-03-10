@@ -19,13 +19,24 @@ func stubValidData(data: Data = Data(), statusCode: Int32 = 200, test: @escaping
     testWithStub(response: HTTPStubsResponse(data: data, statusCode: statusCode, headers: nil), test: test)
 }
 
-func stubValidData(response: HTTPStubsResponse = HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)) {
-    stub(condition: everything) { _ in return response }
+
+func stubValidData(data: Data = Data(), response: HTTPStubsResponse? = nil) {
+    if let response = response {
+        stub(condition: everything) { _ in return response }
+    } else {
+        stub(condition: everything) { _ in return HTTPStubsResponse(data: data, statusCode: 200, headers: nil) }
+    }
 }
 
 func stubValidJSON(_ json: Any) {
     let JSONData = try! JSONSerialization.data(withJSONObject: json, options: [])
     let stubResponse = HTTPStubsResponse(data: JSONData, statusCode: 200, headers: nil)
+    stubValidData(response: stubResponse)
+}
+
+func stubString(_ string: String = "some") {
+    let data = string.data(using: .utf8)!
+    let stubResponse = HTTPStubsResponse(data: data, statusCode: 200, headers: nil)
     stubValidData(response: stubResponse)
 }
 
