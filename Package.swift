@@ -19,7 +19,7 @@ let package = Package(
         ),
         .testTarget(
             name: "AsyncNetworkServiceTests",
-            dependencies: ["OHHTTPStubs", "OHHTTPStubsSwift"]
+            dependencies: ["OHHTTPStubs"]
         )
     ]
 )
