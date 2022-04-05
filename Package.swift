@@ -15,11 +15,13 @@ let package = Package(
     targets: [
         .target(
             name: "AsyncNetworkService",
-            dependencies: ["OHHTTPStubs"]
+            dependencies: ["OHHTTPStubs"],
+            path: "[PackageRoot]/AsyncNetworkService"
         ),
         .testTarget(
             name: "AsyncNetworkServiceTests",
-            dependencies: ["OHHTTPStubs"]
+            dependencies: ["OHHTTPStubs"],
+            path: "[PackageRoot]/AsyncNetworkServiceTests"
         )
     ]
 )
