@@ -10,7 +10,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: URL(string: "https://github.com/AliSoftware/OHHTTPStubs.git")!, from: "9.0.0")
+        .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", from: "9.0.0")
     ],
     targets: [
         .target(
