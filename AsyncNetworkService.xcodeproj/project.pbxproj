@@ -50,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8347924927FCBCC100AFDDF3 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		E8A9142C279B2D3800095A98 /* AsyncNetworkService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AsyncNetworkService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A9142F279B2D3800095A98 /* AsyncNetworkService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AsyncNetworkService.h; sourceTree = "<group>"; };
 		E8A91430279B2D3800095A98 /* AsyncNetworkService.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = AsyncNetworkService.docc; sourceTree = "<group>"; };
@@ -113,6 +114,7 @@
 		E8A91422279B2D3800095A98 = {
 			isa = PBXGroup;
 			children = (
+				8347924927FCBCC100AFDDF3 /* Package.swift */,
 				E8A9142E279B2D3800095A98 /* AsyncNetworkService */,
 				E8A9143A279B2D3800095A98 /* AsyncNetworkServiceTests */,
 				E8A91468279B3C8800095A98 /* AsyncNetworkServiceExample */,
