@@ -7,5 +7,4 @@
 
 import Foundation
 
-
 // example of passing up a `NetworkRequestModifier` to always add in

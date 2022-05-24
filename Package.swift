@@ -5,16 +5,16 @@ let package = Package(
     name: "AsyncNetworkService",
     platforms: [
         .iOS(.v13),
-        .macOS(.v10_15)
+        .macOS(.v10_15),
     ],
     products: [
         .library(
             name: "AsyncNetworkService",
             targets: ["AsyncNetworkService"]
-        )
+        ),
     ],
     dependencies: [
-        .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", from: "9.0.0")
+        .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", from: "9.0.0"),
     ],
     targets: [
         .target(
@@ -26,6 +26,6 @@ let package = Package(
             name: "AsyncNetworkServiceTests",
             dependencies: ["OHHTTPStubs"],
             path: "./AsyncNetworkServiceTests"
-        )
+        ),
     ]
 )

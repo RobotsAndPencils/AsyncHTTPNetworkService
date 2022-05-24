@@ -5,8 +5,8 @@
 //  Created by Matt Kiazyk on 2022-01-21.
 //
 
-import SwiftUI
 import AsyncNetworkService
+import SwiftUI
 
 @main
 struct AsyncNetworkServiceExampleApp: App {

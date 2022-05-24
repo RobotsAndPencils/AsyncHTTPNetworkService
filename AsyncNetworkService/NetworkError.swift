@@ -15,8 +15,8 @@ public enum NetworkError: Error, Equatable {
     case noDataInResponse
 }
 
-extension Equatable where Self : Error {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+public extension Equatable where Self: Error {
+    static func == (lhs: Self, rhs: Self) -> Bool {
         lhs as Error == rhs as Error
     }
 }
