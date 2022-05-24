@@ -21,27 +21,27 @@ public protocol NetworkLogger {
 }
 
 class ConsoleLogger: NetworkLogger {
+    static var shared: ConsoleLogger = .init()
 
-   static var shared: ConsoleLogger = ConsoleLogger()
+    func log(_ message: String, type: OSLogType, log: OSLog = .default, sender: String) {
+        let emoji: String
 
-   func log(_ message: String, type: OSLogType, log: OSLog = .default, sender: String) {
-       let emoji: String
- 
-       switch type {
+        switch type {
         case .default: emoji = "➡️"
-           case .debug: emoji = "✳️"
-           case .info: emoji = "✏️"
-           case .fault: emoji = "⚠️"
-           case .error: emoji = "❌"
-       default:
-           emoji = "✳️"
-       }
-       
-       os.os_log(
-           "%@: receive %@",
-           log: log,
-           type: type,
-           emoji,
-           "\(sender): \(message)")
-   }
+        case .debug: emoji = "✳️"
+        case .info: emoji = "✏️"
+        case .fault: emoji = "⚠️"
+        case .error: emoji = "❌"
+        default:
+            emoji = "✳️"
+        }
+
+        os.os_log(
+            "%@: receive %@",
+            log: log,
+            type: type,
+            emoji,
+            "\(sender): \(message)"
+        )
+    }
 }

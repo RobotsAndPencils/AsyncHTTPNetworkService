@@ -1,15 +1,15 @@
 
+import AsyncNetworkService
 import Foundation
 import OHHTTPStubs
 import OHHTTPStubsSwift
-import AsyncNetworkService
 
 // convenience helpers for stubbing data
-let everything: (URLRequest) -> (Bool) = { _ in return true }
+let everything: (URLRequest) -> (Bool) = { _ in true }
 let timeout: DispatchTimeInterval = .seconds(2)
 
 func testWithStub(response: HTTPStubsResponse, test: @escaping (@escaping () -> Void) -> Void) {
-    stub(condition: everything) { _ in return response }
+    stub(condition: everything) { _ in response }
     test {
         HTTPStubs.removeAllStubs()
     }
@@ -19,12 +19,11 @@ func stubValidData(data: Data = Data(), statusCode: Int32 = 200, test: @escaping
     testWithStub(response: HTTPStubsResponse(data: data, statusCode: statusCode, headers: nil), test: test)
 }
 
-
 func stubValidData(data: Data = Data(), response: HTTPStubsResponse? = nil) {
     if let response = response {
-        stub(condition: everything) { _ in return response }
+        stub(condition: everything) { _ in response }
     } else {
-        stub(condition: everything) { _ in return HTTPStubsResponse(data: data, statusCode: 200, headers: nil) }
+        stub(condition: everything) { _ in HTTPStubsResponse(data: data, statusCode: 200, headers: nil) }
     }
 }
 

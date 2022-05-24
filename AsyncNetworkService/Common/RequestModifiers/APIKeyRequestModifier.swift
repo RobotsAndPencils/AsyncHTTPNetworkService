@@ -12,7 +12,7 @@ public class APIKeyRequestModifier: NetworkRequestModifier {
     public init(apiKey: String) {
         self.apiKey = apiKey
     }
-    
+
     public func mutate(_ request: URLRequest) -> URLRequest {
         guard
             let url = request.url,
@@ -22,16 +22,16 @@ public class APIKeyRequestModifier: NetworkRequestModifier {
         }
         //
         let apiKey = URLQueryItem(name: "api_key", value: apiKey)
-        
+
         var queryItems: [URLQueryItem] = components.queryItems ?? []
         queryItems.append(apiKey)
         components.queryItems = queryItems
-        
+
         guard let newURL = components.url else {
             assertionFailure("Expected to be able to add a query item to the URL without breaking it")
             return request
         }
-        
+
         var newRequest = request
         newRequest.url = newURL
         return newRequest

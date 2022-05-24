@@ -17,8 +17,7 @@ struct GiphyData: Decodable {
 
 struct GiphyImages: Decodable {
     let downsizedLarge: GiphyImageData
-    
-    
+
     enum CodingKeys: String, CodingKey {
         case downsizedLarge = "downsized_large"
     }

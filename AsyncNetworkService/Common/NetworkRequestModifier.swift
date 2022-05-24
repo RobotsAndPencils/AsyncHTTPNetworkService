@@ -21,8 +21,8 @@ public protocol ConvertsToURLRequest {
     func asURLRequest() -> URLRequest
 }
 
-extension NetworkRequestModifier {
-    public func mutate(_ requestModifiable: ConvertsToURLRequest) -> URLRequest {
+public extension NetworkRequestModifier {
+    func mutate(_ requestModifiable: ConvertsToURLRequest) -> URLRequest {
         let urlRequest = requestModifiable.asURLRequest()
         return mutate(urlRequest)
     }
