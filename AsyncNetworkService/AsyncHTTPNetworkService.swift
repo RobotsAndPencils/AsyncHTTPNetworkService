@@ -17,6 +17,9 @@ public protocol AsyncNetworkService: AnyObject {
 
     /// if this is set, all network requests returned with an error will loop through the list.
     var errorHandlers: [AsyncNetworkErrorHandler] { get set }
+    
+    /// if this is set, all network reponses returned with success will call `handle` on these interceptors
+    var reponseInterceptors: [NetworkResponseInterceptor] { get set }
 
     /// Requests data. This function handles setting up the network request, etc. All subsequent functions build off of this one.
     /// This is the only function that really  needs to  be implemented to provide a new instance of a network service.
@@ -27,14 +30,20 @@ public class AsyncHTTPNetworkService: AsyncNetworkService, BearerTokenAware {
     public var refreshTokenObserver: NotificationObserver?
     public var authenticationToken: String = ""
     public var requestModifiers: [NetworkRequestModifier]
+    public var reponseInterceptors: [NetworkResponseInterceptor]
 
     private let urlSession = URLSession(configuration: .ephemeral)
 
     public var errorHandlers: [AsyncNetworkErrorHandler] = []
 
-    public init(requestModifiers: [NetworkRequestModifier] = [], errorHandlers: [AsyncNetworkErrorHandler] = []) {
+    public init(
+        requestModifiers: [NetworkRequestModifier] = [],
+        errorHandlers: [AsyncNetworkErrorHandler] = [],
+        reponseInterceptors: [NetworkResponseInterceptor] = []
+    ) {
         self.requestModifiers = requestModifiers
         self.errorHandlers = errorHandlers
+        self.reponseInterceptors = reponseInterceptors
 
         refreshTokenObserver = NotificationObserver(notification: refreshTokenNotification) {
             [weak self] token in
@@ -101,8 +110,12 @@ public class AsyncHTTPNetworkService: AsyncNetworkService, BearerTokenAware {
                 guard let data = data else {
                     throw NetworkError.noDataInResponse
                 }
-
-                return (data, response)
+                
+                guard let responseInterceptor = self.reponseInterceptors.filter({ $0.shouldHandle(data: data, response: response, request: request) }).first else {
+                    return (data, response)
+                }
+                
+                return responseInterceptor.handle(data: data, response: response, request: request)
             }
         }
     }

@@ -13,6 +13,10 @@ extension URL {
     static func stub() -> URL {
         return URL(string: "http://www.google.com")!
     }
+    
+    static func modifiedStub() -> URL {
+        return URL(string: "http://www.google.com/modified")!
+    }
 }
 
 extension UIImage {
@@ -30,5 +34,30 @@ extension UIImage {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newImage
+    }
+}
+
+extension String {
+    static var original: String = "original"
+    static var modified: String = "modified"
+}
+
+extension URLResponse {
+    static var originalStub: URLResponse {
+        URLResponse(url: .stub(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+    }
+    
+    static var modifiedStub: URLResponse {
+        URLResponse(url: .modifiedStub(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+    }
+}
+
+extension Data {
+    static var originalStub: Data {
+        String.original.data(using: .utf8)!
+    }
+    
+    static var modifiedStub: Data {
+        String.modified.data(using: .utf8)!
     }
 }
