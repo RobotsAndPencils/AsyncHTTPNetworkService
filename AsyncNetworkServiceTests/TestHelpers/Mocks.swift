@@ -19,6 +19,28 @@ final class NetworkRequestModifierMock: NetworkRequestModifier {
     }
 }
 
+final class NetworkReponseInterceptorMock: NetworkResponseInterceptor {
+    
+    public var shouldHandleCallCount = 0
+    public var shouldHandleReceivedValue: (data: Data, response: URLResponse, request: ConvertsToURLRequest)?
+    public var shouldHandleReturnValue: Bool!
+    public func shouldHandle(data: Data, response: URLResponse, request: ConvertsToURLRequest) -> Bool {
+        shouldHandleCallCount += 1
+        shouldHandleReceivedValue = (data, response, request)
+        return shouldHandleReturnValue
+    }
+    
+    public var handleCallCount = 0
+    public var handleReceivedValue: (data: Data, response: URLResponse, request: ConvertsToURLRequest)?
+    public var handleReturnValue: (data: Data, response: URLResponse)?
+    public func handle(data: Data, response: URLResponse, request: ConvertsToURLRequest) -> (Data, URLResponse) {
+        handleCallCount += 1
+        handleReceivedValue = (data, response, request)
+        return handleReturnValue ?? (data, response)
+    }
+    
+}
+
 extension String: Error {}
 
 let passingValidatorMock: ResponseValidator = { _, _ in

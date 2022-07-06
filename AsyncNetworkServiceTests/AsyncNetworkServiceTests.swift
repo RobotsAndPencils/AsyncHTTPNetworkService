@@ -14,13 +14,28 @@ class AsyncNetworkServiceTests: XCTestCase {
     struct TestContext {
         let subject: AsyncHTTPNetworkService
         let mockModifiers: [NetworkRequestModifierMock]!
+        let inactiveInterceptor: NetworkReponseInterceptorMock = {
+            let mock = NetworkReponseInterceptorMock()
+            mock.shouldHandleReturnValue = false
+            return mock
+        }()
+        let modifyingInterceptor: NetworkReponseInterceptorMock = {
+            let mock = NetworkReponseInterceptorMock()
+            mock.shouldHandleReturnValue = true
+            mock.handleReturnValue = (Data.modifiedStub, URLResponse.modifiedStub)
+            return mock
+        }()
 
         init() {
             mockModifiers = [NetworkRequestModifierMock(), NetworkRequestModifierMock()]
             mockModifiers.forEach { mockModifier in
                 mockModifier.mutateReturnValue = .stub()
             }
-            subject = AsyncHTTPNetworkService(requestModifiers: mockModifiers)
+            
+            subject = AsyncHTTPNetworkService(
+                requestModifiers: mockModifiers,
+                reponseInterceptors: []
+            )
         }
     }
 
@@ -536,10 +551,57 @@ class AsyncNetworkServiceTests: XCTestCase {
                 throw "Error is not a noDataInResponse"
             }
         }
-        runAsyncTest {}
+        // runAsyncTest {}
         // it applies modifications
         testContext.mockModifiers.forEach { mockModifier in
             XCTAssertEqual(mockModifier.mutateCallCount, 1)
         }
+    }
+    
+    func testmodifyingInterceptor() async throws {
+        let testContext = TestContext()
+        testContext.subject.responseInterceptors = [
+            testContext.inactiveInterceptor,
+            testContext.modifyingInterceptor
+        ]
+        
+        let originalDataToReturn = Data.originalStub
+        
+        stubValidData(data: originalDataToReturn, response: nil)
+
+        // it downloads some data
+        let result = try await testContext.subject.requestData(URL.stub(), validators: [passingValidatorMock])
+
+        // it calls applicable interceptor
+        XCTAssertEqual(testContext.inactiveInterceptor.handleCallCount, 0)
+        XCTAssertEqual(testContext.modifyingInterceptor.handleCallCount, 1)
+        
+        // modifying interceptor receives original data
+        XCTAssertEqual(originalDataToReturn, testContext.modifyingInterceptor.handleReceivedValue?.data)
+        
+        // interceptor modifies the response
+        XCTAssertEqual(result.0, testContext.modifyingInterceptor.handleReturnValue?.data)
+        XCTAssertEqual(String(decoding: result.0, as: UTF8.self), String.modified)
+    }
+    
+    func testPassthroughInterceptor() async throws {
+        let testContext = TestContext()
+        testContext.subject.responseInterceptors = [
+            testContext.inactiveInterceptor
+        ]
+        
+        let originalDataToReturn = Data.originalStub
+        
+        stubValidData(data: originalDataToReturn, response: nil)
+
+        // it downloads some data
+        let result = try await testContext.subject.requestData(URL.stub(), validators: [passingValidatorMock])
+
+        // no interceptors called
+        XCTAssertEqual(testContext.inactiveInterceptor.handleCallCount, 0)
+        
+        // original data returned
+        XCTAssertEqual(result.0, originalDataToReturn)
+        XCTAssertEqual(String(decoding: result.0, as: UTF8.self), String.original)
     }
 }
