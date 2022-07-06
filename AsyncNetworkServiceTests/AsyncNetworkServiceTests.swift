@@ -560,7 +560,7 @@ class AsyncNetworkServiceTests: XCTestCase {
     
     func testmodifyingInterceptor() async throws {
         let testContext = TestContext()
-        testContext.subject.reponseInterceptors = [
+        testContext.subject.responseInterceptors = [
             testContext.inactiveInterceptor,
             testContext.modifyingInterceptor
         ]
@@ -586,7 +586,7 @@ class AsyncNetworkServiceTests: XCTestCase {
     
     func testPassthroughInterceptor() async throws {
         let testContext = TestContext()
-        testContext.subject.reponseInterceptors = [
+        testContext.subject.responseInterceptors = [
             testContext.inactiveInterceptor
         ]
         

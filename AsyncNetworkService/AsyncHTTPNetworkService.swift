@@ -19,7 +19,7 @@ public protocol AsyncNetworkService: AnyObject {
     var errorHandlers: [AsyncNetworkErrorHandler] { get set }
     
     /// if this is set, all network reponses returned with success will call `handle` on these interceptors
-    var reponseInterceptors: [NetworkResponseInterceptor] { get set }
+    var responseInterceptors: [NetworkResponseInterceptor] { get set }
 
     /// Requests data. This function handles setting up the network request, etc. All subsequent functions build off of this one.
     /// This is the only function that really  needs to  be implemented to provide a new instance of a network service.
@@ -30,7 +30,7 @@ public class AsyncHTTPNetworkService: AsyncNetworkService, BearerTokenAware {
     public var refreshTokenObserver: NotificationObserver?
     public var authenticationToken: String = ""
     public var requestModifiers: [NetworkRequestModifier]
-    public var reponseInterceptors: [NetworkResponseInterceptor]
+    public var responseInterceptors: [NetworkResponseInterceptor]
 
     private let urlSession = URLSession(configuration: .ephemeral)
 
@@ -43,7 +43,7 @@ public class AsyncHTTPNetworkService: AsyncNetworkService, BearerTokenAware {
     ) {
         self.requestModifiers = requestModifiers
         self.errorHandlers = errorHandlers
-        self.reponseInterceptors = reponseInterceptors
+        self.responseInterceptors = reponseInterceptors
 
         refreshTokenObserver = NotificationObserver(notification: refreshTokenNotification) {
             [weak self] token in
@@ -111,7 +111,7 @@ public class AsyncHTTPNetworkService: AsyncNetworkService, BearerTokenAware {
                     throw NetworkError.noDataInResponse
                 }
                 
-                guard let responseInterceptor = self.reponseInterceptors.filter({ $0.shouldHandle(data: data, response: response, request: request) }).first else {
+                guard let responseInterceptor = self.responseInterceptors.filter({ $0.shouldHandle(data: data, response: response, request: request) }).first else {
                     return (data, response)
                 }
                 
