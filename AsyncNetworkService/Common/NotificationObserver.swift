@@ -47,12 +47,3 @@ func postNotification<T>(notification: AsyncNotification<T>, value: T) {
     let userInfo = ["value": UserInfoContainer(value)]
     NotificationCenter.default.post(name: notification.notificationName, object: nil, userInfo: userInfo)
 }
-
-protocol BearerTokenAware {
-    var authenticationToken: String { get set }
-}
-
-// MARK: - Refresh Token Notification
-
-/// A AsyncNotification type that is used to notify services of when a token has refreshed.
-let refreshTokenNotification: AsyncNotification<String> = AsyncNotification()

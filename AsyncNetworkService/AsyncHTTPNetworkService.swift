@@ -9,7 +9,7 @@ import Foundation
 
 /// A  protocol used for `AsyncHTTPNetworkService` that speaks to a remote resource via URL requests
 public protocol AsyncNetworkService: AnyObject {
-    var authenticationToken: String { get set }
+    var authenticationTokenProvider: AuthenticationTokenProvider? { get set }
 
     /// If this is set, all network requests made through this service will have the modifier applied.
     /// To apply multiple mutations to each network request, use `CompositeNetworkRequestModifier`.
@@ -26,9 +26,8 @@ public protocol AsyncNetworkService: AnyObject {
     func requestData(_ request: ConvertsToURLRequest, validators: [ResponseValidator]) async throws -> (Data, URLResponse)
 }
 
-public class AsyncHTTPNetworkService: AsyncNetworkService, BearerTokenAware {
-    public var refreshTokenObserver: NotificationObserver?
-    public var authenticationToken: String = ""
+public class AsyncHTTPNetworkService: AsyncNetworkService {
+    public weak var authenticationTokenProvider: AuthenticationTokenProvider?
     public var requestModifiers: [NetworkRequestModifier]
     public var responseInterceptors: [NetworkResponseInterceptor]
 
@@ -44,11 +43,6 @@ public class AsyncHTTPNetworkService: AsyncNetworkService, BearerTokenAware {
         self.requestModifiers = requestModifiers
         self.errorHandlers = errorHandlers
         self.responseInterceptors = reponseInterceptors
-
-        refreshTokenObserver = NotificationObserver(notification: refreshTokenNotification) {
-            [weak self] token in
-                self?.authenticationToken = token
-        }
     }
 
     private func applyModifiers(to request: ConvertsToURLRequest) -> URLRequest {
@@ -58,7 +52,7 @@ public class AsyncHTTPNetworkService: AsyncNetworkService, BearerTokenAware {
         // if we've set the authorization header lets update it with the new one that got sent back from the client
         // if not, return the regular request
         if updatedRequest.allHTTPHeaderFields?["Authorization"] != nil {
-            return updatedRequest.token(authenticationToken) // for all calls, for simplicity - lets add the bearer token
+            return updatedRequest.token(authenticationTokenProvider?.authenticationToken ?? "") // for all calls, for simplicity - lets add the bearer token
         } else {
             return updatedRequest
         }
