@@ -600,7 +600,7 @@ class AsyncNetworkServiceTests: XCTestCase {
         // no interceptors called
         XCTAssertEqual(testContext.inactiveInterceptor.handleCallCount, 0)
         
-        // original mock file data returned
+        // original data returned
         XCTAssertEqual(result.0, originalDataToReturn)
         XCTAssertEqual(String(decoding: result.0, as: UTF8.self), String.original)
     }
