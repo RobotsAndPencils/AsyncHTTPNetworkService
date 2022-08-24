@@ -604,4 +604,72 @@ class AsyncNetworkServiceTests: XCTestCase {
         XCTAssertEqual(result.0, originalDataToReturn)
         XCTAssertEqual(String(decoding: result.0, as: UTF8.self), String.original)
     }
+    
+    
+    // MARK: FileUploadRequestModifier
+
+    func testFileUploadRequestModifier() async throws {
+        var request = URLRequest(url: URL.stub())
+        
+        let fileData1 = "mock file data 1".data(using: .utf8)!
+        let fileData2 = "mock file data 2".data(using: .utf8)!
+        
+        // Sample test file mock file data for upload
+        let files: [UploadableFile] = [
+            // image with no additional data
+            .init(data: fileData1, fieldName: "images", fileName: "file name 1"),
+            
+            // image with additional data
+            .init(data: fileData2,
+                  fieldName: "images",
+                  additionalContent: ["property name1": "property value1", "property name2": "property value2"],
+                  fileName: "file name 2"),
+        ]
+        
+        request = request.withFiles(files: files, boundary: "CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0")
+        
+        let expectedHeaders = ["Content-Type": "multipart/form-data;boundary=CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0"]
+        
+        let actualHeaders = request.allHTTPHeaderFields
+        
+        let expectedBodyString = """
+\r
+--CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0\r
+Content-Disposition: form-data; name="images"; filename="file name 1.jpg"\r
+Content-Type: image/jpeg\r
+\r
+mock file data 1\r
+--CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0\r
+Content-Disposition: form-data; name="images"; filename="file name 2.jpg"\r
+Content-Type: image/jpeg\r
+\r
+mock file data 2\r
+--CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0\r
+Content-Disposition: form-data; name="property name1"\r
+\r
+property value1\r
+--CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0\r
+Content-Disposition: form-data; name="property name2"\r
+\r
+property value2\r
+--CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0--\r
+
+"""
+        
+        let actualBodyString = String(data: request.httpBody ?? Data(), encoding: .utf8) ?? ""
+        
+        
+        XCTAssertEqual(actualHeaders, expectedHeaders)
+        XCTAssertEqual(actualBodyString, expectedBodyString)
+    }
+    
+    func testMimeTypes() {
+        let pngData = UIImage.stub().pngData()!
+        XCTAssertEqual(pngData.mimeType, "image/png")
+        XCTAssertEqual(pngData.fileExtension, "png")
+        
+        let jpegData = UIImage.stub().jpegData(compressionQuality: 0)!
+        XCTAssertEqual(jpegData.mimeType, "image/jpeg")
+        XCTAssertEqual(jpegData.fileExtension, "jpg")
+    }
 }

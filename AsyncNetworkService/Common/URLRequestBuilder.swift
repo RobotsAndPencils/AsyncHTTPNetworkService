@@ -123,6 +123,11 @@ public extension URLRequest {
         request.cachePolicy = policy
         return request
     }
+    
+    func withFiles(files: [UploadableFile], boundary: String = ProcessInfo.processInfo.globallyUniqueString) -> URLRequest {
+        let modifier = FileUploadRequestModifier(files: files, boundary: boundary)
+        return modifier.mutate(self)
+    }
 
     private func newLine() -> Data {
         return Data("\n".utf8)
