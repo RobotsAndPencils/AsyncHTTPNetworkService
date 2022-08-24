@@ -662,4 +662,14 @@ property value2\r
         XCTAssertEqual(actualHeaders, expectedHeaders)
         XCTAssertEqual(actualBodyString, expectedBodyString)
     }
+    
+    func testMimeTypes() {
+        let pngData = UIImage.stub().pngData()!
+        XCTAssertEqual(pngData.mimeType, "image/png")
+        XCTAssertEqual(pngData.fileExtension, "png")
+        
+        let jpegData = UIImage.stub().jpegData(compressionQuality: 0)!
+        XCTAssertEqual(jpegData.mimeType, "image/jpeg")
+        XCTAssertEqual(jpegData.fileExtension, "jpg")
+    }
 }
