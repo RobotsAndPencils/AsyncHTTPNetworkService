@@ -3,6 +3,14 @@
 
 *.xcuserstate
 
-*/xcuserdata/*
+xcuserdata
+
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.xccheckout
+
+*.mode1v3
+*.mode2v3
 
 *.xcsettings
