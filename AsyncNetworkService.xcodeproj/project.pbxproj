@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A2BCAE228B5687B0031844D /* FileUploadRequestModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BCAE128B5687B0031844D /* FileUploadRequestModifier.swift */; };
+		4A2BCAE528B5693F0031844D /* UploadableFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BCAE428B5693F0031844D /* UploadableFile.swift */; };
+		4A2BCAE728B5710C0031844D /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BCAE628B5710C0031844D /* Data+.swift */; };
 		4AB0D5032876099B00C36A3A /* NetworkResponseInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0D5022876099B00C36A3A /* NetworkResponseInterceptor.swift */; };
 		4AB0D50728763C0E00C36A3A /* AuthenticationTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0D50628763C0E00C36A3A /* AuthenticationTokenProvider.swift */; };
 		E8A91431279B2D3800095A98 /* AsyncNetworkService.docc in Sources */ = {isa = PBXBuildFile; fileRef = E8A91430279B2D3800095A98 /* AsyncNetworkService.docc */; };
@@ -52,6 +55,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A2BCAE128B5687B0031844D /* FileUploadRequestModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUploadRequestModifier.swift; sourceTree = "<group>"; };
+		4A2BCAE428B5693F0031844D /* UploadableFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadableFile.swift; sourceTree = "<group>"; };
+		4A2BCAE628B5710C0031844D /* Data+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		4AB0D5022876099B00C36A3A /* NetworkResponseInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponseInterceptor.swift; sourceTree = "<group>"; };
 		4AB0D50628763C0E00C36A3A /* AuthenticationTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTokenProvider.swift; sourceTree = "<group>"; };
 		8347924927FCBCC100AFDDF3 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -115,6 +121,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A2BCAE328B5692D0031844D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4A2BCAE428B5693F0031844D /* UploadableFile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E8A91422279B2D3800095A98 = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +177,7 @@
 		E8A9144A279B306700095A98 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4A2BCAE628B5710C0031844D /* Data+.swift */,
 				E8A9144B279B308900095A98 /* URLRequest+.swift */,
 				E8A9144D279B309900095A98 /* URL+.swift */,
 				E8A9145C279B386800095A98 /* Codable+.swift */,
@@ -175,6 +190,7 @@
 		E8A91455279B33EB00095A98 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				4A2BCAE328B5692D0031844D /* Models */,
 				E8A9147D279B4CC600095A98 /* RequestModifiers */,
 				E8A91448279B301800095A98 /* NetworkRequestModifier.swift */,
 				E8A91456279B33F500095A98 /* NotificationObserver.swift */,
@@ -213,6 +229,7 @@
 			children = (
 				E8A9145A279B35A100095A98 /* BearerTokenRequestModifier.swift */,
 				E8A9147B279B4CB900095A98 /* APIKeyRequestModifier.swift */,
+				4A2BCAE128B5687B0031844D /* FileUploadRequestModifier.swift */,
 			);
 			path = RequestModifiers;
 			sourceTree = "<group>";
@@ -378,9 +395,12 @@
 				4AB0D5032876099B00C36A3A /* NetworkResponseInterceptor.swift in Sources */,
 				E8A91459279B353200095A98 /* URLRequestBuilder.swift in Sources */,
 				E8A9145D279B386800095A98 /* Codable+.swift in Sources */,
+				4A2BCAE528B5693F0031844D /* UploadableFile.swift in Sources */,
 				E8A91449279B301800095A98 /* NetworkRequestModifier.swift in Sources */,
 				E8A9147C279B4CB900095A98 /* APIKeyRequestModifier.swift in Sources */,
+				4A2BCAE228B5687B0031844D /* FileUploadRequestModifier.swift in Sources */,
 				E8A91450279B30E300095A98 /* AsyncNetworkHandler.swift in Sources */,
+				4A2BCAE728B5710C0031844D /* Data+.swift in Sources */,
 				E8A91452279B313300095A98 /* ResponseValidator.swift in Sources */,
 				E8A91454279B317D00095A98 /* NetworkError.swift in Sources */,
 				E8A9147F279B677600095A98 /* NetworkLogger.swift in Sources */,
