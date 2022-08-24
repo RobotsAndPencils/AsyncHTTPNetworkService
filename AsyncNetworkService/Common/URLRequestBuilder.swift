@@ -126,9 +126,7 @@ public extension URLRequest {
     
     func withFiles(files: [UploadableFile], boundary: String = ProcessInfo.processInfo.globallyUniqueString) -> URLRequest {
         let modifier = FileUploadRequestModifier(files: files, boundary: boundary)
-        var request = self
-        request = modifier.mutate(request)
-        return request
+        return modifier.mutate(self)
     }
 
     private func newLine() -> Data {
