@@ -44,15 +44,8 @@ public class URLRequestBuilder {
         return URLRequest(url: baseURL).path(requestPath).method(.get).contentType(contentType)
     }
 
-    public func post(_ requestPath: String, contentType: ContentType = .json, files: [UploadableFile] = [], boundary: String = ProcessInfo.processInfo.globallyUniqueString) -> URLRequest {
-        var request = URLRequest(url: baseURL).path(requestPath).method(.post).contentType(contentType)
-        
-        if !files.isEmpty {
-            let modifier = FileUploadRequestModifier(files: files, boundary: boundary)
-            request = modifier.mutate(request)
-        }
-        
-        return request
+    public func post(_ requestPath: String, contentType: ContentType = .json) -> URLRequest {
+        return URLRequest(url: baseURL).path(requestPath).method(.post).contentType(contentType)
     }
 
     public func put(_ requestPath: String) -> URLRequest {
@@ -128,6 +121,13 @@ public extension URLRequest {
     func withCachePolicy(_ policy: URLRequest.CachePolicy) -> URLRequest {
         var request = self
         request.cachePolicy = policy
+        return request
+    }
+    
+    func withFiles(files: [UploadableFile], boundary: String = ProcessInfo.processInfo.globallyUniqueString) -> URLRequest {
+        let modifier = FileUploadRequestModifier(files: files, boundary: boundary)
+        var request = self
+        request = modifier.mutate(request)
         return request
     }
 

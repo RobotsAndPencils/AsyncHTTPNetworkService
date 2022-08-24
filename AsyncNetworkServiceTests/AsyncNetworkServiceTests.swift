@@ -609,7 +609,7 @@ class AsyncNetworkServiceTests: XCTestCase {
     // MARK: FileUploadRequestModifier
 
     func testFileUploadRequestModifier() async throws {
-        let requestBuilder = URLRequestBuilder(baseURL: URL.stub())
+        var request = URLRequest(url: URL.stub())
         
         let fileData1 = "mock file data 1".data(using: .utf8)!
         let fileData2 = "mock file data 2".data(using: .utf8)!
@@ -626,7 +626,7 @@ class AsyncNetworkServiceTests: XCTestCase {
                   fileName: "file name 2"),
         ]
         
-        let request = requestBuilder.post("/test-upload-images", files: files, boundary: "CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0")
+        request = request.withFiles(files: files, boundary: "CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0")
         
         let expectedHeaders = ["Content-Type": "multipart/form-data;boundary=CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0"]
         
