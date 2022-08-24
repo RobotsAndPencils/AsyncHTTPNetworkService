@@ -1,9 +1,7 @@
 //
 //  Data+.swift
-//  MobilightAPI
 //
 //  Created by Alex Maslov on 2022-08-15.
-//  Copyright © 2022 DUST Identity, Inc. All rights reserved.
 //
 
 import Foundation
