@@ -21,7 +21,6 @@ extension Data {
         case 0x49, 0x4D:
             return "image/tiff"
         default:
-            //assertionFailure("Could not get mimeType")
             return "image/jpeg"
         }
     }
@@ -37,7 +36,6 @@ extension Data {
         case 0x49, 0x4D:
             return "tiff"
         default:
-            //assertionFailure("Could not get mimeType")
             return "jpg"
         }
     }
