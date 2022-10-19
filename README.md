@@ -27,7 +27,7 @@ AsyncHTTPNetworkService is compatible to iOS 13+. If there are issues surroundin
 
 # URLRequestBuilder + URLRequest extension
 
-AsyncHTTPNetworkService includes `URLRequest` helpers for ease of creating requests and modifying reuqests 
+AsyncHTTPNetworkService includes `URLRequest` helpers for ease of creating requests and modifying requests 
 
 ```swift
 let baseURL = URLRequestBuilder(baseURL:  URL(string: "someendpoint"))
@@ -56,6 +56,12 @@ For each request, this will add in the passed in `authenticationToken` inside th
 # Example App
 
 Included in this repo is a SwiftUI example app using AsyncHTTPNetworkService connecting to a Giphy api. Included is showing how using Codable to decode to objects easily. 
+
+The network calls to connect to Giphy is layed out in [AsyncService.swift](https://github.com/RobotsAndPencils/AsyncHTTPNetworkService/blob/main/AsyncNetworkServiceExample/AsyncService.swift)
+
+Inside the `GiphyService` class is a list of Routes that are connected, and a function for each endpoint that is connected. 
+
+The init of the `GiphyService` includes an `APIKeyRequestModifier` that adds the a `api_key` to the header on each network request.
 
 ## Maintainers
 
