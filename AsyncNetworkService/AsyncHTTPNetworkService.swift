@@ -25,7 +25,6 @@ public protocol AsyncNetworkService: AnyObject {
 }
 
 public class AsyncHTTPNetworkService: AsyncNetworkService {
-    public weak var authenticationTokenProvider: AuthenticationTokenProvider?
     public var requestModifiers: [NetworkRequestModifier]
     public var responseInterceptors: [NetworkResponseInterceptor]
 
