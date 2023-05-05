@@ -617,13 +617,13 @@ class AsyncNetworkServiceTests: XCTestCase {
         // Sample test file mock file data for upload
         let files: [UploadableFile] = [
             // image with no additional data
-            .init(data: fileData1, fieldName: "images", fileName: "file name 1"),
+            .init(data: fileData1, fileName: "file name 1.jpg", fieldName: "images"),
             
             // image with additional data
             .init(data: fileData2,
+                  fileName: "file name 2.jpg",
                   fieldName: "images",
-                  additionalContent: ["property name1": "property value1", "property name2": "property value2"],
-                  fileName: "file name 2"),
+                  additionalContent: ["property name1": "property value1", "property name2": "property value2"]),
         ]
         
         request = request.withFiles(files: files, boundary: "CCC574E7-15E1-40BA-B3D3-679F20F3E2EC-29057-00026EB0E2E684C0")
