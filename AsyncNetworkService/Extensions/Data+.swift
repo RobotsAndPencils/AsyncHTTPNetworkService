@@ -43,7 +43,7 @@ extension Data {
         return values.first ?? 0
     }
     
-    var jsonString: String? {
+    public var jsonString: String? {
         String(data: self, encoding: .utf8)
     }
 }
