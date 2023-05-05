@@ -16,7 +16,7 @@ public struct UploadableFile {
     public let additionalContent: [ContentName: ContentValue]
     public let fileName: String
 
-    /// Creates an object representation of a file with associated data required for a POST upload
+    /// Creates an object representation of a file with associated data required for a POST upload request 
     ///
     /// ```
     /// UploadableFile(data: pdfData, fileName: "myfile.pdf")
@@ -29,9 +29,7 @@ public struct UploadableFile {
     ///   - additionalContent: Additional key value pairs that will be appended to the `Content-Disposition` header as properties
     ///
     ///
-    /// - Returns: Void if deletion succeeds
-    ///
-    /// - Throws: `NetworkError` if deletion fails
+    /// - Returns: UploadableFile
     
     public init(data: Data, fileName: String, fieldName: String = "files", additionalContent: [ContentName: ContentValue] = [:]) {
         self.data = data
