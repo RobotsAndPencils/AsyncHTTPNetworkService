@@ -25,13 +25,13 @@ struct FileUploadRequestModifier: NetworkRequestModifier {
         var combinedData = Data()
         files.forEach {
             var postContent = ""
-            let fileName = "\($0.fileName).\($0.data.fileExtension)"
+            let fileName = "\($0.fileName)"
 
             postContent += "\r\n"
             postContent += "--\(boundary)"
             postContent += "\r\n"
             postContent += "Content-Disposition: form-data; name=\"\($0.fieldName)\"; filename=\"\(fileName)\"\r\n"
-            postContent += "Content-Type: \($0.data.mimeType)"
+            postContent += "Content-Type: \($0.fileName.mimeType)"
             postContent += "\r\n\r\n"
             
             guard let postData = postContent.data(using: .utf8) else { return }

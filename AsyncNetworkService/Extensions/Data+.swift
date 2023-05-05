@@ -7,7 +7,7 @@
 import Foundation
 
 extension Data {
-    var mimeType: String {
+    public var mimeType: String {
         switch mimeUInt {
         case 0xFF:
             return "image/jpeg"
@@ -22,7 +22,7 @@ extension Data {
         }
     }
 
-    var fileExtension: String {
+    public var fileExtension: String {
         switch mimeUInt {
         case 0xFF:
             return "jpg"
@@ -41,5 +41,9 @@ extension Data {
         var values = [UInt8](repeating: 0, count: 1)
         copyBytes(to: &values, count: 1)
         return values.first ?? 0
+    }
+    
+    public var jsonString: String? {
+        String(data: self, encoding: .utf8)
     }
 }
