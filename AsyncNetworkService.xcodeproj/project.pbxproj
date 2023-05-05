@@ -10,6 +10,7 @@
 		4A2BCAE228B5687B0031844D /* FileUploadRequestModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BCAE128B5687B0031844D /* FileUploadRequestModifier.swift */; };
 		4A2BCAE528B5693F0031844D /* UploadableFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BCAE428B5693F0031844D /* UploadableFile.swift */; };
 		4A2BCAE728B5710C0031844D /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BCAE628B5710C0031844D /* Data+.swift */; };
+		4AA6B05A2A0579B0008BA3CF /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6B0592A0579B0008BA3CF /* String+.swift */; };
 		4AB0D5032876099B00C36A3A /* NetworkResponseInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0D5022876099B00C36A3A /* NetworkResponseInterceptor.swift */; };
 		E8A91431279B2D3800095A98 /* AsyncNetworkService.docc in Sources */ = {isa = PBXBuildFile; fileRef = E8A91430279B2D3800095A98 /* AsyncNetworkService.docc */; };
 		E8A91437279B2D3800095A98 /* AsyncNetworkService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A9142C279B2D3800095A98 /* AsyncNetworkService.framework */; };
@@ -57,6 +58,7 @@
 		4A2BCAE128B5687B0031844D /* FileUploadRequestModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUploadRequestModifier.swift; sourceTree = "<group>"; };
 		4A2BCAE428B5693F0031844D /* UploadableFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadableFile.swift; sourceTree = "<group>"; };
 		4A2BCAE628B5710C0031844D /* Data+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
+		4AA6B0592A0579B0008BA3CF /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+.swift"; path = "../../../AsyncHTTPNetworkService-RP/AsyncNetworkService/Extensions/String+.swift"; sourceTree = "<group>"; };
 		4AB0D5022876099B00C36A3A /* NetworkResponseInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponseInterceptor.swift; sourceTree = "<group>"; };
 		8347924927FCBCC100AFDDF3 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		E8A9142C279B2D3800095A98 /* AsyncNetworkService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AsyncNetworkService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +183,7 @@
 				E8A9145C279B386800095A98 /* Codable+.swift */,
 				E8A9145E279B3AE300095A98 /* JSONDecoder+.swift */,
 				E8A91460279B3B0F00095A98 /* DateFormatter+.swift */,
+				4AA6B0592A0579B0008BA3CF /* String+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				E8A91461279B3B0F00095A98 /* DateFormatter+.swift in Sources */,
 				E8A91447279B2F5F00095A98 /* AsyncHTTPNetworkService.swift in Sources */,
 				E8A9144C279B308900095A98 /* URLRequest+.swift in Sources */,
+				4AA6B05A2A0579B0008BA3CF /* String+.swift in Sources */,
 				E8A91457279B33F500095A98 /* NotificationObserver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -580,7 +584,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -609,7 +613,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
