@@ -7,7 +7,7 @@
 import Foundation
 
 extension Data {
-    var mimeType: String {
+    public var mimeType: String {
         switch mimeUInt {
         case 0xFF:
             return "image/jpeg"
@@ -22,7 +22,7 @@ extension Data {
         }
     }
 
-    var fileExtension: String {
+    public var fileExtension: String {
         switch mimeUInt {
         case 0xFF:
             return "jpg"
