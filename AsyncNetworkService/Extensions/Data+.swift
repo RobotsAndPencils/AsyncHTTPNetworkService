@@ -42,4 +42,8 @@ extension Data {
         copyBytes(to: &values, count: 1)
         return values.first ?? 0
     }
+    
+    var jsonString: String? {
+        String(data: self, encoding: .utf8)
+    }
 }
