@@ -16,7 +16,7 @@ public struct UploadableFile {
     public let additionalContent: [ContentName: ContentValue]
     public let fileName: String
 
-    public init(data: Data, fieldName: String, additionalContent: [ContentName: ContentValue] = [:], fileName: String) {
+    public init(data: Data, fileName: String, fieldName: String = "files", additionalContent: [ContentName: ContentValue] = [:]) {
         self.data = data
         self.fieldName = fieldName
         self.additionalContent = additionalContent
