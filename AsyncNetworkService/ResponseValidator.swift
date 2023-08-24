@@ -10,7 +10,7 @@ import Foundation
 /// Validates that a response meets certain criteria. If it does not, throws an error.
 public typealias ResponseValidator = (HTTPURLResponse, Data?) throws -> Void
 
-public let statusCodeIsIn200s: ResponseValidator = { response, data in
+public let responseValidator: ResponseValidator = { response, data in
     switch response.statusCode {
     case 200..<300:
         return

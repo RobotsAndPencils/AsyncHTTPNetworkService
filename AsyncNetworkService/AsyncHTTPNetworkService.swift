@@ -109,7 +109,7 @@ public class AsyncHTTPNetworkService: AsyncNetworkService {
 
 public extension AsyncNetworkService {
     /// Requests a single object. That object must conform to `Decodable`. Will interpret the data received as JSON and attempt to decode the object in question from it.
-    func requestObject<ObjectType: Decodable>(_ request: ConvertsToURLRequest, validators: [ResponseValidator] = [statusCodeIsIn200s], jsonDecoder: JSONDecoder = JSONDecoder.networkJSONDecoder) async throws -> ObjectType {
+    func requestObject<ObjectType: Decodable>(_ request: ConvertsToURLRequest, validators: [ResponseValidator] = [responseValidator], jsonDecoder: JSONDecoder = JSONDecoder.networkJSONDecoder) async throws -> ObjectType {
         let requestTask = Task { () -> (Data, URLResponse) in
             try await requestData(request, validators: validators)
         }
@@ -130,7 +130,7 @@ public extension AsyncNetworkService {
     }
 
     /// Requests a list of objects. The object in question must conform to `Decodable`. Will interpret the data received as JSON and attempt to decode an array of the object in question from it.
-    func requestObjects<ObjectType: Decodable>(_ request: ConvertsToURLRequest, validators: [ResponseValidator] = [statusCodeIsIn200s], jsonDecoder: JSONDecoder = JSONDecoder.networkJSONDecoder) async throws -> [ObjectType] {
+    func requestObjects<ObjectType: Decodable>(_ request: ConvertsToURLRequest, validators: [ResponseValidator] = [responseValidator], jsonDecoder: JSONDecoder = JSONDecoder.networkJSONDecoder) async throws -> [ObjectType] {
         let requestTask = Task { () -> (Data, URLResponse) in
             try await requestData(request, validators: validators)
         }
@@ -151,7 +151,7 @@ public extension AsyncNetworkService {
     }
 
     /// Requests a string from a network endpoint.
-    func requestString(_ request: ConvertsToURLRequest, encoding: String.Encoding = .utf8, validators: [ResponseValidator] = [statusCodeIsIn200s]) async throws -> String {
+    func requestString(_ request: ConvertsToURLRequest, encoding: String.Encoding = .utf8, validators: [ResponseValidator] = [responseValidator]) async throws -> String {
         let requestTask = Task { () -> (Data, URLResponse) in
             try await requestData(request, validators: validators)
         }
@@ -170,7 +170,7 @@ public extension AsyncNetworkService {
     }
 
     /// Requests a network endpoint without any return
-    func requestVoid(_ request: ConvertsToURLRequest, validators: [ResponseValidator] = [statusCodeIsIn200s]) async throws {
+    func requestVoid(_ request: ConvertsToURLRequest, validators: [ResponseValidator] = [responseValidator]) async throws {
         let requestTask = Task { () -> (Data, URLResponse) in
             try await requestData(request, validators: validators)
         }
@@ -186,7 +186,7 @@ public extension AsyncNetworkService {
     }
 
     /// Requests a single object. That object must be decodable as a `String`. Will interpret the data received as JSON and attempt to decode the object in question from it.
-    func requestStringWithResponse(_ request: ConvertsToURLRequest, encoding: String.Encoding = .utf8, validators: [ResponseValidator] = [statusCodeIsIn200s]) async throws -> (String, URLResponse) {
+    func requestStringWithResponse(_ request: ConvertsToURLRequest, encoding: String.Encoding = .utf8, validators: [ResponseValidator] = [responseValidator]) async throws -> (String, URLResponse) {
         let requestTask = Task { () -> (Data, URLResponse) in
             try await requestData(request, validators: validators)
         }
