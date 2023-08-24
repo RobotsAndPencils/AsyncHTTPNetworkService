@@ -16,10 +16,11 @@ public enum NetworkError: Error, LocalizedError, Equatable {
     case noInternetConnection
     case timeout
     case serverError
+    case badRequest
     case unauthorized
     case forbidden
     case notFound
-    case badRequest
+    case methodNotAllowed
     case other(Error)
     
     public var errorDescription: String? {
@@ -40,14 +41,16 @@ public enum NetworkError: Error, LocalizedError, Equatable {
             return "Request timed out"
         case .serverError:
             return "Internal server error"
+        case .badRequest:
+            return "Invalid or incorrect request formed"
         case .unauthorized:
             return "You're not authorized to perform this request"
         case .forbidden:
             return "Access to the requested resource is forbidden"
         case .notFound:
             return "Requested resource not found"
-        case .badRequest:
-            return "Invalid request formed"
+        case .methodNotAllowed:
+            return "The http method used is not allowed for the request"
         case .other(let error):
             return error.localizedDescription
         }

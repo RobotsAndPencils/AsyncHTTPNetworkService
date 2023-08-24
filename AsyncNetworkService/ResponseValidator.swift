@@ -14,6 +14,8 @@ public let responseValidator: ResponseValidator = { response, data in
     switch response.statusCode {
     case 200..<300:
         return
+    case 400:
+        throw NetworkError.badRequest
     case 401:
         throw NetworkError.unauthorized
     case 403:
@@ -21,7 +23,7 @@ public let responseValidator: ResponseValidator = { response, data in
     case 404:
         throw NetworkError.notFound
     case 405:
-        throw NetworkError.badRequest
+        throw NetworkError.methodNotAllowed
     case 500..<600:
         throw NetworkError.serverError
     default:
