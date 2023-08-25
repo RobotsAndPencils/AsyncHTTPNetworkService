@@ -24,9 +24,11 @@ public let responseValidator: ResponseValidator = { response, data in
         throw NetworkError.notFound
     case 405:
         throw NetworkError.methodNotAllowed
+    case 408:
+        throw NetworkError.timeout
     case 500..<600:
         throw NetworkError.serverError
     default:
-        throw NetworkError.non200StatusCode(statusCode: response.statusCode, data: data)
+        throw NetworkError.other
     }
 }

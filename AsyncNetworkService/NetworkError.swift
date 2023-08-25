@@ -8,25 +8,21 @@
 import Foundation
 
 public enum NetworkError: Error, LocalizedError, Equatable {
-    case non200StatusCode(statusCode: Int, data: Data?)
     case invalidResponseFormat
     case decoding(error: Error)
     case decodingString
     case noDataInResponse
-    case noInternetConnection
-    case timeout
-    case serverError
     case badRequest
     case unauthorized
     case forbidden
     case notFound
     case methodNotAllowed
-    case other(Error)
+    case timeout
+    case serverError
+    case other
     
     public var errorDescription: String? {
         switch self {
-        case .non200StatusCode(let statusCode, _):
-            return "Received non-200 HTTP status code: \(statusCode)"
         case .invalidResponseFormat:
             return "Invalid response format"
         case .decoding(_):
@@ -35,24 +31,22 @@ public enum NetworkError: Error, LocalizedError, Equatable {
             return "Error while decoding a string"
         case .noDataInResponse:
             return "No data in server response"
-        case .noInternetConnection:
-            return "No internet connection available"
-        case .timeout:
-            return "Request timed out"
-        case .serverError:
-            return "Internal server error"
         case .badRequest:
-            return "Invalid or incorrect request formed"
+            return "Oops! Something went wrong with your request. Please try again."
         case .unauthorized:
-            return "You're not authorized to perform this request"
+            return "You need to sign in to perform this action."
         case .forbidden:
-            return "Access to the requested resource is forbidden"
+            return "Sorry, you don't have permission to do this."
         case .notFound:
-            return "Requested resource not found"
+            return "We couldn't find what you're looking for."
         case .methodNotAllowed:
-            return "The http method used is not allowed for the request"
-        case .other(let error):
-            return error.localizedDescription
+            return "Sorry, you can't do that right now."
+        case .timeout:
+            return "Your request timed out. Please check your connection and try again."
+        case .serverError:
+            return "Something went wrong on our end. We're working to fix it."
+        case .other:
+            return "An error ocurred"
         }
     }
 }
