@@ -23,16 +23,8 @@ public enum NetworkError: Error, LocalizedError, Equatable {
     
     public var errorDescription: String? {
         switch self {
-        case .invalidResponseFormat:
-            return "Invalid response format"
-        case .decoding(_):
-            return "Error while decoding response data"
-        case .decodingString:
-            return "Error while decoding a string"
-        case .noDataInResponse:
-            return "No data in server response"
         case .badRequest:
-            return "Oops! Something went wrong with your request. Please try again."
+            return "Oops! Something went wrong with your request. Please check your inputs and try again."
         case .unauthorized:
             return "You need to sign in to perform this action."
         case .forbidden:
@@ -45,8 +37,8 @@ public enum NetworkError: Error, LocalizedError, Equatable {
             return "Your request timed out. Please check your connection and try again."
         case .serverError:
             return "Something went wrong on our end. We're working to fix it."
-        case .other:
-            return "An error ocurred"
+        case .invalidResponseFormat, .decoding(_), .decodingString, .noDataInResponse, .other:
+            return "An error ocurred, please try again later"
         }
     }
 }
