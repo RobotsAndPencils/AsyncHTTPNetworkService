@@ -20,27 +20,6 @@ public enum NetworkError: Error, LocalizedError, Equatable {
     case timeout
     case serverError
     case other
-    
-    public var errorDescription: String? {
-        switch self {
-        case .badRequest:
-            return "Oops! Something went wrong with your request. Please check your inputs and try again."
-        case .unauthorized:
-            return "You need to sign in to perform this action."
-        case .forbidden:
-            return "Sorry, you don't have permission to do this."
-        case .notFound:
-            return "We couldn't find what you're looking for."
-        case .methodNotAllowed:
-            return "Sorry, you can't do that right now."
-        case .timeout:
-            return "Your request timed out. Please check your connection and try again."
-        case .serverError:
-            return "Something went wrong on our end. We're working to fix it."
-        case .invalidResponseFormat, .decoding(_), .decodingString, .noDataInResponse, .other:
-            return "An error ocurred, please try again later"
-        }
-    }
 }
 
 public extension Equatable where Self: Error {
