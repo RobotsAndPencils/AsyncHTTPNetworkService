@@ -15,20 +15,20 @@ public let responseValidator: ResponseValidator = { response, data in
     case 200..<300:
         return
     case 400:
-        throw NetworkError.badRequest
+        throw NetworkError.badRequest(contextualizedDescription: nil)
     case 401:
-        throw NetworkError.unauthorized
+        throw NetworkError.unauthorized(contextualizedDescription: nil)
     case 403:
-        throw NetworkError.forbidden
+        throw NetworkError.forbidden(contextualizedDescription: nil)
     case 404:
         throw NetworkError.notFound
     case 405:
         throw NetworkError.methodNotAllowed
     case 408:
-        throw NetworkError.timeout
+        throw NetworkError.timeout(contextualizedDescription: nil)
     case 500..<600:
-        throw NetworkError.serverError
+        throw NetworkError.serverError(contextualizedDescription: nil)
     default:
-        throw NetworkError.other
+        throw NetworkError.other(contextualizedDescription: nil)
     }
 }

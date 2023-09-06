@@ -12,14 +12,33 @@ public enum NetworkError: Error, LocalizedError, Equatable {
     case decoding(error: Error)
     case decodingString
     case noDataInResponse
-    case badRequest
-    case unauthorized
-    case forbidden
+    case badRequest(contextualizedDescription: String?)
+    case unauthorized(contextualizedDescription: String?)
+    case forbidden(contextualizedDescription: String?)
     case notFound
     case methodNotAllowed
-    case timeout
-    case serverError
-    case other
+    case timeout(contextualizedDescription: String?)
+    case serverError(contextualizedDescription: String?)
+    case other(contextualizedDescription: String?)
+    
+    public var errorDescription: String? {
+        switch self {
+        case .badRequest(let contextualizedDescription):
+            return contextualizedDescription
+        case .unauthorized(let contextualizedDescription):
+            return contextualizedDescription
+        case .forbidden(let contextualizedDescription):
+            return contextualizedDescription
+        case .timeout(let contextualizedDescription):
+            return contextualizedDescription
+        case .serverError(let contextualizedDescription):
+            return contextualizedDescription
+        case .other(let contextualizedDescription):
+            return contextualizedDescription
+        default:
+            return ""
+        }
+    }
 }
 
 public extension Equatable where Self: Error {
