@@ -36,7 +36,7 @@ public enum NetworkError: Error, LocalizedError, Equatable {
         case .other(let contextualizedDescription):
             return contextualizedDescription
         default:
-            return ""
+            return nil
         }
     }
 }
