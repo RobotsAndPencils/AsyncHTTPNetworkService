@@ -21,9 +21,7 @@ public let responseValidator: ResponseValidator = { response, data in
     case 403:
         throw NetworkError.forbidden(contextualizedDescription: nil)
     case 404:
-        throw NetworkError.notFound
-    case 405:
-        throw NetworkError.methodNotAllowed
+        throw NetworkError.notFound(contextualizedDescription: nil)
     case 408:
         throw NetworkError.timeout(contextualizedDescription: nil)
     case 500..<600:

@@ -12,14 +12,13 @@ public enum NetworkError: Error, LocalizedError, Equatable {
     case decoding(error: Error)
     case decodingString
     case noDataInResponse
-    case badRequest(contextualizedDescription: String?)
-    case unauthorized(contextualizedDescription: String?)
-    case forbidden(contextualizedDescription: String?)
-    case notFound
-    case methodNotAllowed
-    case timeout(contextualizedDescription: String?)
-    case serverError(contextualizedDescription: String?)
-    case other(contextualizedDescription: String?)
+    case badRequest(contextualizedDescription: String? = nil)
+    case unauthorized(contextualizedDescription: String? = nil)
+    case forbidden(contextualizedDescription: String? = nil)
+    case notFound(contextualizedDescription: String? = nil)
+    case timeout(contextualizedDescription: String? = nil)
+    case serverError(contextualizedDescription: String? = nil)
+    case other(contextualizedDescription: String? = nil)
     
     public var errorDescription: String? {
         switch self {
@@ -28,6 +27,8 @@ public enum NetworkError: Error, LocalizedError, Equatable {
         case .unauthorized(let contextualizedDescription):
             return contextualizedDescription
         case .forbidden(let contextualizedDescription):
+            return contextualizedDescription
+        case .notFound(let contextualizedDescription):
             return contextualizedDescription
         case .timeout(let contextualizedDescription):
             return contextualizedDescription
