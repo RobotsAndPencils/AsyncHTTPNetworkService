@@ -19,7 +19,43 @@ public enum NetworkError: Error, LocalizedError, Equatable {
     case timeout(contextualizedDescription: String? = nil)
     case serverError(contextualizedDescription: String? = nil)
     case other(contextualizedDescription: String? = nil)
-    
+
+    // MARK: types
+
+    public typealias ID = NetworkErrorID
+
+    public enum NetworkErrorID: Int {
+        case invalidResponseFormat
+        case decoding
+        case decodingString
+        case noDataInResponse
+        case badRequest
+        case unauthorized
+        case forbidden
+        case notFound
+        case timeout
+        case serverError
+        case other
+    }
+
+    // MARK: properties
+
+    public var id: NetworkErrorID {
+        switch self {
+        case .invalidResponseFormat: return .invalidResponseFormat
+        case .decoding: return .decoding
+        case .decodingString: return .decodingString
+        case .noDataInResponse: return .noDataInResponse
+        case .badRequest: return .badRequest
+        case .unauthorized: return .unauthorized
+        case .forbidden: return .forbidden
+        case .notFound: return .notFound
+        case .timeout: return .timeout
+        case .serverError: return .serverError
+        case .other: return .other
+        }
+    }
+
     public var errorDescription: String? {
         switch self {
         case .badRequest(let contextualizedDescription):
@@ -53,4 +89,14 @@ public func == (lhs: Error, rhs: Error) -> Bool {
     let error1 = lhs as NSError
     let error2 = rhs as NSError
     return error1.domain == error2.domain && error1.code == error2.code && "\(lhs)" == "\(rhs)"
+}
+
+public extension Error {
+    // MARK: - internal methods -
+    
+    func isError(_ networkErrorID: NetworkError.ID) -> Bool {
+        guard let error = self as? NetworkError else { return false }
+        
+        return error.id == networkErrorID
+    }
 }
