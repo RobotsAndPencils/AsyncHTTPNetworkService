@@ -22,9 +22,9 @@ public enum NetworkError: Error, LocalizedError, Equatable {
 
     // MARK: types
 
-    public typealias ID = NetworkErrorID
+    public typealias ID = ErrorID
 
-    public enum NetworkErrorID: Int {
+    public enum ErrorID: Int {
         case invalidResponseFormat
         case decoding
         case decodingString
@@ -40,7 +40,7 @@ public enum NetworkError: Error, LocalizedError, Equatable {
 
     // MARK: properties
 
-    public var id: NetworkErrorID {
+    public var id: ErrorID {
         switch self {
         case .invalidResponseFormat: return .invalidResponseFormat
         case .decoding: return .decoding
@@ -78,6 +78,17 @@ public enum NetworkError: Error, LocalizedError, Equatable {
     }
 }
 
+public extension Error {
+    // MARK: - internal methods -
+
+    func isError(_ networkErrorID: NetworkError.ID) -> Bool {
+        guard let error = self as? NetworkError else { return false }
+
+        let id = error.id
+        return id == networkErrorID
+    }
+}
+
 public extension Equatable where Self: Error {
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs as Error == rhs as Error
@@ -89,14 +100,4 @@ public func == (lhs: Error, rhs: Error) -> Bool {
     let error1 = lhs as NSError
     let error2 = rhs as NSError
     return error1.domain == error2.domain && error1.code == error2.code && "\(lhs)" == "\(rhs)"
-}
-
-public extension Error {
-    // MARK: - internal methods -
-    
-    func isError(_ networkErrorID: NetworkError.ID) -> Bool {
-        guard let error = self as? NetworkError else { return false }
-        
-        return error.id == networkErrorID
-    }
 }
