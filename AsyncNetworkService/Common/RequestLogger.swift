@@ -14,10 +14,8 @@ class RequestLogger {
 
     func log(request: URLRequest, responseData: Data?, isSuccess: Bool) {
         var jsonString = ""
-        if let responseData = responseData,
-           let jsonObject = try? JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any],
-           let jsonStringData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) {
-            jsonString = String(data: jsonStringData, encoding: .utf8) ?? ""
+        if let responseData = responseData {
+            jsonString = String(decoding: responseData, as: UTF8.self)
         }
 
         logs.append(
