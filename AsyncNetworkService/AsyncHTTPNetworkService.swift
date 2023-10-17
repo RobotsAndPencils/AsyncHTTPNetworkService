@@ -116,17 +116,21 @@ public class AsyncHTTPNetworkService: AsyncNetworkService {
 public extension AsyncNetworkService {
     /// Requests a single object. That object must conform to `Decodable`. Will interpret the data received as JSON and attempt to decode the object in question from it.
     func requestObject<ObjectType: Decodable>(_ request: ConvertsToURLRequest, validators: [ResponseValidator] = [responseValidator], jsonDecoder: JSONDecoder = JSONDecoder.networkJSONDecoder) async throws -> ObjectType {
+        var responseData: Data? = nil
+        var responseIsSuccess = false
+        defer {
+            if shouldLogRequests {
+                RequestLogger.shared.log(
+                    request: request.asURLRequest(),
+                    responseData: responseData,
+                    isSuccess: responseIsSuccess
+                )
+            }
+        }
         let requestTask = Task { () -> (Data, URLResponse) in
             do {
                 return try await requestData(request, validators: validators)
             } catch {
-                if shouldLogRequests {
-                    RequestLogger.shared.log(
-                        request: request.asURLRequest(),
-                        responseData: nil,
-                        isSuccess: false
-                    )
-                }
                 throw error
             }
         }
@@ -135,33 +139,14 @@ public extension AsyncNetworkService {
 
         switch result {
         case let .failure(error):
-            if shouldLogRequests {
-                RequestLogger.shared.log(
-                    request: request.asURLRequest(),
-                    responseData: nil,
-                    isSuccess: false
-                )
-            }
             throw error
 
         case let .success((data, _)):
             do {
-                if shouldLogRequests {
-                    RequestLogger.shared.log(
-                        request: request.asURLRequest(),
-                        responseData: data,
-                        isSuccess: true
-                    )
-                }
+                responseData = data
+                responseIsSuccess = true
                 return try jsonDecoder.decode(ObjectType.self, from: data)
             } catch {
-                if shouldLogRequests {
-                    RequestLogger.shared.log(
-                        request: request.asURLRequest(),
-                        responseData: nil,
-                        isSuccess: false
-                    )
-                }
                 throw NetworkError.decoding(error: error)
             }
         }
