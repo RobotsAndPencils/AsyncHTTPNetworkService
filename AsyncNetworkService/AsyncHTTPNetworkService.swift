@@ -15,9 +15,12 @@ public protocol AsyncNetworkService: AnyObject {
 
     /// if this is set, all network requests returned with an error will loop through the list.
     var errorHandlers: [AsyncNetworkErrorHandler] { get set }
-    
+
     /// if this is set, all network reponses returned with success will call `handle` on these interceptors
     var responseInterceptors: [NetworkResponseInterceptor] { get set }
+
+    /// if this is set, each request (successfull or failures) will be logged
+    var shouldLogRequests: Bool { get set }
 
     /// Requests data. This function handles setting up the network request, etc. All subsequent functions build off of this one.
     /// This is the only function that really  needs to  be implemented to provide a new instance of a network service.
@@ -29,6 +32,7 @@ public class AsyncHTTPNetworkService: AsyncNetworkService {
     public var responseInterceptors: [NetworkResponseInterceptor]
 
     private let urlSession: URLSession
+    public var shouldLogRequests: Bool
 
     public var errorHandlers: [AsyncNetworkErrorHandler] = []
 
@@ -36,12 +40,14 @@ public class AsyncHTTPNetworkService: AsyncNetworkService {
         requestModifiers: [NetworkRequestModifier] = [],
         errorHandlers: [AsyncNetworkErrorHandler] = [],
         reponseInterceptors: [NetworkResponseInterceptor] = [],
-        urlSessionConfiguration: URLSessionConfiguration = .ephemeral
+        urlSessionConfiguration: URLSessionConfiguration = .ephemeral,
+        shouldLogRequests: Bool
     ) {
         self.requestModifiers = requestModifiers
         self.errorHandlers = errorHandlers
         self.responseInterceptors = reponseInterceptors
         self.urlSession = URLSession(configuration: urlSessionConfiguration)
+        self.shouldLogRequests = shouldLogRequests
     }
 
     private func applyModifiers(to request: ConvertsToURLRequest) -> URLRequest {
@@ -111,19 +117,51 @@ public extension AsyncNetworkService {
     /// Requests a single object. That object must conform to `Decodable`. Will interpret the data received as JSON and attempt to decode the object in question from it.
     func requestObject<ObjectType: Decodable>(_ request: ConvertsToURLRequest, validators: [ResponseValidator] = [responseValidator], jsonDecoder: JSONDecoder = JSONDecoder.networkJSONDecoder) async throws -> ObjectType {
         let requestTask = Task { () -> (Data, URLResponse) in
-            try await requestData(request, validators: validators)
+            do {
+                return try await requestData(request, validators: validators)
+            } catch {
+                if shouldLogRequests {
+                    RequestLogger.shared.log(
+                        request: request.asURLRequest(),
+                        responseData: nil,
+                        isSuccess: false
+                    )
+                }
+                throw error
+            }
         }
 
         let result = await requestTask.result
 
         switch result {
         case let .failure(error):
+            if shouldLogRequests {
+                RequestLogger.shared.log(
+                    request: request.asURLRequest(),
+                    responseData: nil,
+                    isSuccess: false
+                )
+            }
             throw error
 
         case let .success((data, _)):
             do {
+                if shouldLogRequests {
+                    RequestLogger.shared.log(
+                        request: request.asURLRequest(),
+                        responseData: data,
+                        isSuccess: true
+                    )
+                }
                 return try jsonDecoder.decode(ObjectType.self, from: data)
             } catch {
+                if shouldLogRequests {
+                    RequestLogger.shared.log(
+                        request: request.asURLRequest(),
+                        responseData: nil,
+                        isSuccess: false
+                    )
+                }
                 throw NetworkError.decoding(error: error)
             }
         }
