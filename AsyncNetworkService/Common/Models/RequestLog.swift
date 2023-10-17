@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RequestLog {
+struct RequestLog {
     public let request: URLRequest
     public let response: String
     public let isSuccess: Bool
