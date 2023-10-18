@@ -116,23 +116,18 @@ public class AsyncHTTPNetworkService: AsyncNetworkService {
 public extension AsyncNetworkService {
     /// Requests a single object. That object must conform to `Decodable`. Will interpret the data received as JSON and attempt to decode the object in question from it.
     func requestObject<ObjectType: Decodable>(_ request: ConvertsToURLRequest, validators: [ResponseValidator] = [responseValidator], jsonDecoder: JSONDecoder = JSONDecoder.networkJSONDecoder) async throws -> ObjectType {
-        var responseData: Data? = nil
-        var responseIsSuccess = false
+        var requestLog = RequestLog(
+            request: request.asURLRequest(),
+            responseData: nil,
+            isSuccess: false
+        )
         defer {
             if shouldLogRequests {
-                RequestLogger.shared.log(
-                    request: request.asURLRequest(),
-                    responseData: responseData,
-                    isSuccess: responseIsSuccess
-                )
+                RequestLogger.shared.log(request: requestLog)
             }
         }
         let requestTask = Task { () -> (Data, URLResponse) in
-            do {
-                return try await requestData(request, validators: validators)
-            } catch {
-                throw error
-            }
+            try await requestData(request, validators: validators)
         }
 
         let result = await requestTask.result
@@ -143,8 +138,11 @@ public extension AsyncNetworkService {
 
         case let .success((data, _)):
             do {
-                responseData = data
-                responseIsSuccess = true
+                requestLog = RequestLog(
+                    request: request.asURLRequest(),
+                    responseData: data,
+                    isSuccess: true
+                )
                 return try jsonDecoder.decode(ObjectType.self, from: data)
             } catch {
                 throw NetworkError.decoding(error: error)

@@ -12,18 +12,7 @@ class RequestLogger {
 
     public var logs: [RequestLog] = []
 
-    func log(request: URLRequest, responseData: Data?, isSuccess: Bool) {
-        var jsonString = ""
-        if let responseData = responseData {
-            jsonString = String(decoding: responseData, as: UTF8.self)
-        }
-
-        logs.append(
-            RequestLog(
-                request: request,
-                response: jsonString,
-                isSuccess: isSuccess
-            )
-        )
+    func log(request: RequestLog) {
+        logs.append(request)
     }
 }
