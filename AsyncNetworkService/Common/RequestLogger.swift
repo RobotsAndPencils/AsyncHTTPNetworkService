@@ -8,7 +8,7 @@
 import Foundation
 
 public final class RequestLogger {
-    static let shared = RequestLogger()
+    public static let shared = RequestLogger()
 
     public var logs: [RequestLog] = []
 
