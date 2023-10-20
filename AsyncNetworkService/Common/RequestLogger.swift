@@ -9,10 +9,13 @@ import Foundation
 
 public final class RequestLogger {
     public static let shared = RequestLogger()
+    private let queue = DispatchQueue(label: "com.dustidentity.RequestLoggerQueue")
 
     public var logs: [RequestLog] = []
 
     func log(request: RequestLog) {
-        logs.append(request)
+        queue.async {
+            self.logs.append(request)
+        }
     }
 }
