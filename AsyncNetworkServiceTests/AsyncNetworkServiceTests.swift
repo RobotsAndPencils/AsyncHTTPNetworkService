@@ -34,7 +34,8 @@ class AsyncNetworkServiceTests: XCTestCase {
             
             subject = AsyncHTTPNetworkService(
                 requestModifiers: mockModifiers,
-                reponseInterceptors: []
+                reponseInterceptors: [],
+                shouldLogRequests: false
             )
         }
     }

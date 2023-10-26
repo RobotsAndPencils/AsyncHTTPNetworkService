@@ -12,7 +12,8 @@
 		4A2BCAE728B5710C0031844D /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2BCAE628B5710C0031844D /* Data+.swift */; };
 		4AA6B05C2A057DA0008BA3CF /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6B05B2A057DA0008BA3CF /* String+.swift */; };
 		4AB0D5032876099B00C36A3A /* NetworkResponseInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0D5022876099B00C36A3A /* NetworkResponseInterceptor.swift */; };
-		E8A91431279B2D3800095A98 /* AsyncNetworkService.docc in Sources */ = {isa = PBXBuildFile; fileRef = E8A91430279B2D3800095A98 /* AsyncNetworkService.docc */; };
+		DAD2D0B92ADF354800F5F16F /* RequestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD2D0B82ADF354800F5F16F /* RequestLogger.swift */; };
+		DAD2D0BB2ADF355E00F5F16F /* RequestLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD2D0BA2ADF355E00F5F16F /* RequestLog.swift */; };
 		E8A91437279B2D3800095A98 /* AsyncNetworkService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A9142C279B2D3800095A98 /* AsyncNetworkService.framework */; };
 		E8A9143C279B2D3800095A98 /* AsyncNetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A9143B279B2D3800095A98 /* AsyncNetworkServiceTests.swift */; };
 		E8A9143D279B2D3800095A98 /* AsyncNetworkService.h in Headers */ = {isa = PBXBuildFile; fileRef = E8A9142F279B2D3800095A98 /* AsyncNetworkService.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -61,9 +62,10 @@
 		4AA6B05B2A057DA0008BA3CF /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		4AB0D5022876099B00C36A3A /* NetworkResponseInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponseInterceptor.swift; sourceTree = "<group>"; };
 		8347924927FCBCC100AFDDF3 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		DAD2D0B82ADF354800F5F16F /* RequestLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLogger.swift; sourceTree = "<group>"; };
+		DAD2D0BA2ADF355E00F5F16F /* RequestLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLog.swift; sourceTree = "<group>"; };
 		E8A9142C279B2D3800095A98 /* AsyncNetworkService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AsyncNetworkService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A9142F279B2D3800095A98 /* AsyncNetworkService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AsyncNetworkService.h; sourceTree = "<group>"; };
-		E8A91430279B2D3800095A98 /* AsyncNetworkService.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = AsyncNetworkService.docc; sourceTree = "<group>"; };
 		E8A91436279B2D3800095A98 /* AsyncNetworkServiceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AsyncNetworkServiceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A9143B279B2D3800095A98 /* AsyncNetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncNetworkServiceTests.swift; sourceTree = "<group>"; };
 		E8A91446279B2F5F00095A98 /* AsyncHTTPNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncHTTPNetworkService.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 		4A2BCAE328B5692D0031844D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DAD2D0BA2ADF355E00F5F16F /* RequestLog.swift */,
 				4A2BCAE428B5693F0031844D /* UploadableFile.swift */,
 			);
 			path = Models;
@@ -156,11 +159,10 @@
 				E8A91455279B33EB00095A98 /* Common */,
 				E8A9144A279B306700095A98 /* Extensions */,
 				E8A9142F279B2D3800095A98 /* AsyncNetworkService.h */,
-				E8A91430279B2D3800095A98 /* AsyncNetworkService.docc */,
 				E8A91446279B2F5F00095A98 /* AsyncHTTPNetworkService.swift */,
 				E8A9144F279B30E300095A98 /* AsyncNetworkHandler.swift */,
-				E8A91451279B313300095A98 /* ResponseValidator.swift */,
 				E8A91453279B317D00095A98 /* NetworkError.swift */,
+				E8A91451279B313300095A98 /* ResponseValidator.swift */,
 			);
 			path = AsyncNetworkService;
 			sourceTree = "<group>";
@@ -195,9 +197,10 @@
 				E8A9147D279B4CC600095A98 /* RequestModifiers */,
 				E8A91448279B301800095A98 /* NetworkRequestModifier.swift */,
 				E8A91456279B33F500095A98 /* NotificationObserver.swift */,
-				E8A91458279B353200095A98 /* URLRequestBuilder.swift */,
 				E8A9147E279B677600095A98 /* NetworkLogger.swift */,
 				4AB0D5022876099B00C36A3A /* NetworkResponseInterceptor.swift */,
+				DAD2D0B82ADF354800F5F16F /* RequestLogger.swift */,
+				E8A91458279B353200095A98 /* URLRequestBuilder.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -227,8 +230,8 @@
 		E8A9147D279B4CC600095A98 /* RequestModifiers */ = {
 			isa = PBXGroup;
 			children = (
-				E8A9145A279B35A100095A98 /* BearerTokenRequestModifier.swift */,
 				E8A9147B279B4CB900095A98 /* APIKeyRequestModifier.swift */,
+				E8A9145A279B35A100095A98 /* BearerTokenRequestModifier.swift */,
 				4A2BCAE128B5687B0031844D /* FileUploadRequestModifier.swift */,
 			);
 			path = RequestModifiers;
@@ -238,8 +241,8 @@
 			isa = PBXGroup;
 			children = (
 				E8C137B327D6E6AC00F2817C /* Mocks.swift */,
-				E8C137B527D6E6FD00F2817C /* Stubs.swift */,
 				E8C137BD27D7A8D900F2817C /* OHHTTPHelper.swift */,
+				E8C137B527D6E6FD00F2817C /* Stubs.swift */,
 			);
 			path = TestHelpers;
 			sourceTree = "<group>";
@@ -399,12 +402,13 @@
 				E8A91449279B301800095A98 /* NetworkRequestModifier.swift in Sources */,
 				E8A9147C279B4CB900095A98 /* APIKeyRequestModifier.swift in Sources */,
 				4A2BCAE228B5687B0031844D /* FileUploadRequestModifier.swift in Sources */,
+				DAD2D0BB2ADF355E00F5F16F /* RequestLog.swift in Sources */,
+				DAD2D0B92ADF354800F5F16F /* RequestLogger.swift in Sources */,
 				E8A91450279B30E300095A98 /* AsyncNetworkHandler.swift in Sources */,
 				4A2BCAE728B5710C0031844D /* Data+.swift in Sources */,
 				E8A91452279B313300095A98 /* ResponseValidator.swift in Sources */,
 				E8A91454279B317D00095A98 /* NetworkError.swift in Sources */,
 				E8A9147F279B677600095A98 /* NetworkLogger.swift in Sources */,
-				E8A91431279B2D3800095A98 /* AsyncNetworkService.docc in Sources */,
 				E8A9145F279B3AE300095A98 /* JSONDecoder+.swift in Sources */,
 				E8A9145B279B35A100095A98 /* BearerTokenRequestModifier.swift in Sources */,
 				E8A91461279B3B0F00095A98 /* DateFormatter+.swift in Sources */,
