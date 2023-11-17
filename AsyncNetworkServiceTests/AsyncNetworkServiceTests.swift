@@ -57,7 +57,7 @@ class AsyncNetworkServiceTests: XCTestCase {
         stubValidData()
 
         // it downloads some data
-        let result = try await testContext.subject.requestData(URL.stub(), validators: [passingValidatorMock])
+        let result = try await testContext.subject.requestData(URL.stub(), validators: [passingValidatorMock], shouldAddRequestModifiers: true)
         XCTAssertNotNil(result.0)
 
         // it applies modifications
@@ -71,7 +71,7 @@ class AsyncNetworkServiceTests: XCTestCase {
         stubValidData()
         // it downloads some data
         do {
-            _ = try await testContext.subject.requestData(URL.stub(), validators: [failingValidatorMock(error: NetworkError.noDataInResponse)])
+            _ = try await testContext.subject.requestData(URL.stub(), validators: [failingValidatorMock(error: NetworkError.noDataInResponse)], shouldAddRequestModifiers: true)
             throw "I shouldn't call this"
         } catch {
             // reports the error that the validator encountered"
@@ -90,12 +90,15 @@ class AsyncNetworkServiceTests: XCTestCase {
 
         // it downloads some data
         do {
-            _ = try await testContext.subject.requestData(URL.stub(), validators: [
-                passingValidatorMock,
-                passingValidatorMock,
-                failingValidatorMock(error: NetworkError.noDataInResponse),
-                passingValidatorMock,
-            ])
+            _ = try await testContext.subject.requestData(
+                URL.stub(),
+                validators: [
+                    passingValidatorMock,
+                    passingValidatorMock,
+                    failingValidatorMock(error: NetworkError.noDataInResponse),
+                    passingValidatorMock,
+                ],
+                shouldAddRequestModifiers: true)
             throw "I shouldn't call this"
         } catch {
             // reports the error that the validator encountered"
@@ -571,7 +574,7 @@ class AsyncNetworkServiceTests: XCTestCase {
         stubValidData(data: originalDataToReturn, response: nil)
 
         // it downloads some data
-        let result = try await testContext.subject.requestData(URL.stub(), validators: [passingValidatorMock])
+        let result = try await testContext.subject.requestData(URL.stub(), validators: [passingValidatorMock], shouldAddRequestModifiers: true)
 
         // it calls applicable interceptor
         XCTAssertEqual(testContext.inactiveInterceptor.handleCallCount, 0)
@@ -596,7 +599,7 @@ class AsyncNetworkServiceTests: XCTestCase {
         stubValidData(data: originalDataToReturn, response: nil)
 
         // it downloads some data
-        let result = try await testContext.subject.requestData(URL.stub(), validators: [passingValidatorMock])
+        let result = try await testContext.subject.requestData(URL.stub(), validators: [passingValidatorMock], shouldAddRequestModifiers: true)
 
         // no interceptors called
         XCTAssertEqual(testContext.inactiveInterceptor.handleCallCount, 0)
