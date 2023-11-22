@@ -226,4 +226,41 @@ public extension AsyncNetworkService {
             return (string, response)
         }
     }
+
+    /// Request for multiple expected response types. If one doesn't work, then this will try with the next in the response type array
+    func requestWithMultipleResponseTypes(
+        _ request: ConvertsToURLRequest,
+        validators: [ResponseValidator] = [responseValidator],
+        shouldAddRequestModifiers: Bool = true,
+        expectedResponseTypes: [ResponseType]
+    ) async throws -> Any {
+        let requestTask = Task { () -> (Data, URLResponse) in
+            try await requestData(request, validators: validators, shouldAddRequestModifiers: shouldAddRequestModifiers)
+        }
+
+        let result = await requestTask.result
+
+        switch result {
+        case let .failure(error):
+            throw error
+        case let .success((data, _)):
+            for responseType in expectedResponseTypes {
+                do {
+                    switch responseType {
+                    case .object(let objectType):
+                        return try JSONDecoder.networkJSONDecoder.decode(objectType, from: data)
+                    case .string:
+                        if let stringData = String(data: data, encoding: .utf8) {
+                            return stringData
+                        } else {
+                            throw NetworkError.decodingString
+                        }
+                    }
+                } catch {
+                    
+                }
+            }
+            throw NetworkError.decoding(error: NSError())
+        }
+    }
 }
