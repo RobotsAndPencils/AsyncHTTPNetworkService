@@ -24,3 +24,10 @@ extension String {
         return (self as NSString).mimeType
     }
 }
+
+// MARK: - StaticString
+extension String {
+    internal init(_ staticString: StaticString) {
+        self = staticString.withUTF8Buffer { String(decoding: $0, as: UTF8.self) }
+    }
+}

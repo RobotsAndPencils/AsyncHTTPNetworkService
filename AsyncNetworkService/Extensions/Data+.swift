@@ -7,6 +7,9 @@
 import Foundation
 
 extension Data {
+    internal static let _dash = Data("--".utf8)
+    internal static let _crlf = Data("\r\n".utf8)
+
     public var mimeType: String {
         switch mimeUInt {
         case 0xFF:
