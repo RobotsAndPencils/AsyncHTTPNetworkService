@@ -24,6 +24,7 @@
 		DABC22422B1F62940029B7AC /* BodyDataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABC22362B1F62940029B7AC /* BodyDataBuilder.swift */; };
 		DABC22432B1F62940029B7AC /* MultipartFormDataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABC22372B1F62940029B7AC /* MultipartFormDataBuilder.swift */; };
 		DABC22442B1F62940029B7AC /* HTTPHeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABC22382B1F62940029B7AC /* HTTPHeaderBuilder.swift */; };
+		DABC22462B1F6BCD0029B7AC /* ResponseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABC22452B1F6BCD0029B7AC /* ResponseType.swift */; };
 		DAD2D0B92ADF354800F5F16F /* RequestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD2D0B82ADF354800F5F16F /* RequestLogger.swift */; };
 		DAD2D0BB2ADF355E00F5F16F /* RequestLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD2D0BA2ADF355E00F5F16F /* RequestLog.swift */; };
 		E8A91437279B2D3800095A98 /* AsyncNetworkService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A9142C279B2D3800095A98 /* AsyncNetworkService.framework */; };
@@ -86,6 +87,7 @@
 		DABC22362B1F62940029B7AC /* BodyDataBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BodyDataBuilder.swift; sourceTree = "<group>"; };
 		DABC22372B1F62940029B7AC /* MultipartFormDataBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormDataBuilder.swift; sourceTree = "<group>"; };
 		DABC22382B1F62940029B7AC /* HTTPHeaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeaderBuilder.swift; sourceTree = "<group>"; };
+		DABC22452B1F6BCD0029B7AC /* ResponseType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseType.swift; sourceTree = "<group>"; };
 		DAD2D0B82ADF354800F5F16F /* RequestLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLogger.swift; sourceTree = "<group>"; };
 		DAD2D0BA2ADF355E00F5F16F /* RequestLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLog.swift; sourceTree = "<group>"; };
 		E8A9142C279B2D3800095A98 /* AsyncNetworkService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AsyncNetworkService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,6 +215,7 @@
 				E8A91446279B2F5F00095A98 /* AsyncHTTPNetworkService.swift */,
 				E8A9144F279B30E300095A98 /* AsyncNetworkHandler.swift */,
 				E8A91453279B317D00095A98 /* NetworkError.swift */,
+				DABC22452B1F6BCD0029B7AC /* ResponseType.swift */,
 				E8A91451279B313300095A98 /* ResponseValidator.swift */,
 			);
 			path = AsyncNetworkService;
@@ -480,6 +483,7 @@
 				4AA6B05C2A057DA0008BA3CF /* String+.swift in Sources */,
 				E8A91457279B33F500095A98 /* NotificationObserver.swift in Sources */,
 				DABC22422B1F62940029B7AC /* BodyDataBuilder.swift in Sources */,
+				DABC22462B1F6BCD0029B7AC /* ResponseType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
