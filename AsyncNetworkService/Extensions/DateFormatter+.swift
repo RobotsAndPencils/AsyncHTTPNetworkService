@@ -16,4 +16,10 @@ extension DateFormatter {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
         return dateFormatter
     }()
+
+    static let serverDateTimeWithSeconds: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        return df
+    }()
 }
