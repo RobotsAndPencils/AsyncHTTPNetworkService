@@ -19,7 +19,7 @@ public enum HTTPMethod: String {
     case connect = "CONNECT"
 }
 
-public enum ContentType: String {
+public enum ContentTypeEnum: String {
     case json = "application/json"
     case urlencoded = "application/x-www-form-urlencoded"
 }
@@ -40,11 +40,11 @@ public class URLRequestBuilder {
         self.baseURL = baseURL
     }
 
-    public func get(_ requestPath: String, contentType: ContentType = .json) -> URLRequest {
+    public func get(_ requestPath: String, contentType: ContentTypeEnum = .json) -> URLRequest {
         return URLRequest(url: baseURL).path(requestPath).method(.get).contentType(contentType)
     }
 
-    public func post(_ requestPath: String, contentType: ContentType = .json) -> URLRequest {
+    public func post(_ requestPath: String, contentType: ContentTypeEnum = .json) -> URLRequest {
         return URLRequest(url: baseURL).path(requestPath).method(.post).contentType(contentType)
     }
 
@@ -108,7 +108,7 @@ public extension URLRequest {
         return bearerRequestModifier.mutate(self)
     }
 
-    func contentType(_ contentType: ContentType) -> URLRequest {
+    func contentType(_ contentType: ContentTypeEnum) -> URLRequest {
         return setValue(contentType.rawValue, forHeader: "Content-Type")
     }
 
