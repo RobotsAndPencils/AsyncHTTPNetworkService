@@ -149,6 +149,11 @@ public extension AsyncNetworkService {
                 )
                 return try jsonDecoder.decode(ObjectType.self, from: data)
             } catch {
+                requestLog = RequestLog(
+                    request: request.asURLRequest(),
+                    responseData: data,
+                    isSuccess: false
+                )
                 throw NetworkError.decoding(error: error)
             }
         }
