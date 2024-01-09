@@ -149,6 +149,11 @@ public extension AsyncNetworkService {
                 )
                 return try jsonDecoder.decode(ObjectType.self, from: data)
             } catch {
+                requestLog = RequestLog(
+                    request: request.asURLRequest(),
+                    responseData: data,
+                    isSuccess: false
+                )
                 throw NetworkError.decoding(error: error)
             }
         }
@@ -261,6 +266,53 @@ public extension AsyncNetworkService {
                 }
             }
             throw NetworkError.decoding(error: NSError())
+        }
+    }
+
+    func requestObjectAndResponse<ObjectType: Decodable>(_ request: ConvertsToURLRequest, validators: [ResponseValidator] = [responseValidator], jsonDecoder: JSONDecoder = JSONDecoder.networkJSONDecoder, shouldAddRequestModifiers: Bool = true) async throws -> (ObjectType, HTTPURLResponse) {
+        var requestLog = RequestLog(
+            request: request.asURLRequest(),
+            responseData: nil,
+            isSuccess: false
+        )
+        defer {
+            if shouldLogRequests {
+                RequestLogger.shared.log(request: requestLog)
+            }
+        }
+        let requestTask = Task { () -> (Data, URLResponse) in
+            try await requestData(request, validators: validators, shouldAddRequestModifiers: shouldAddRequestModifiers)
+        }
+        
+        let result = await requestTask.result
+        
+        switch result {
+        case let .failure(error):
+            throw error
+            
+        case let .success((data, response)):
+            do {
+                guard let response = response as? HTTPURLResponse else {
+                    throw NetworkError.invalidResponseFormat
+                }
+                
+                requestLog = RequestLog(
+                    request: request.asURLRequest(),
+                    responseData: data,
+                    isSuccess: true
+                )
+                let decodedObject = try jsonDecoder.decode(ObjectType.self, from: data)
+                
+                return (decodedObject, response)
+            } catch {
+                requestLog = RequestLog(
+                    request: request.asURLRequest(),
+                    responseData: data,
+                    isSuccess: false
+                )
+                
+                throw NetworkError.decoding(error: error)
+            }
         }
     }
 }
