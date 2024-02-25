@@ -41,9 +41,6 @@ public extension URLSession {
         let onCancel = { dataTask?.cancel() }
 
         return try await withTaskCancellationHandler(
-            handler: {
-                onCancel()
-            },
             operation: {
                 try await withCheckedThrowingContinuation { continuation in
                     dataTask = self.dataTask(with: request) { data, response, error in
@@ -71,6 +68,9 @@ public extension URLSession {
                     postNotification(notification: networkTaskDidStartNotification, value: task)
                     objc_setAssociatedObject(task, &networkRequestObserverStartDateKey, Date(), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 }
+            },
+            onCancel: {
+                onCancel()
             }
         )
     }
