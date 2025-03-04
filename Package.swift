@@ -1,10 +1,10 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.7
 import PackageDescription
 
 let package = Package(
     name: "AsyncNetworkService",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v16),
         .macOS(.v10_15),
     ],
     products: [

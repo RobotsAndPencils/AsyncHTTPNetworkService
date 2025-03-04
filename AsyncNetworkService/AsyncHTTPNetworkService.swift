@@ -103,6 +103,29 @@ public class AsyncHTTPNetworkService: AsyncNetworkService {
             }
         }
     }
+
+    public func requestBytes(_ request: ConvertsToURLRequest) async throws -> (URLSession.AsyncBytes, URLResponse) {
+        return try await safeRequest {
+            let modifiedRequest = self.applyModifiers(to: request)
+
+            let bytesTask = Task { () -> (URLSession.AsyncBytes, URLResponse) in
+                try await self.urlSession.bytes(for: modifiedRequest)
+            }
+
+            let result = await bytesTask.result
+
+            switch result {
+            case let .failure(error):
+                throw error
+            case let .success((bytes, response)):
+                guard let response = response as? HTTPURLResponse else {
+                    throw NetworkError.invalidResponseFormat
+                }
+
+                return (bytes, response)
+            }
+        }
+    }
 }
 
 public extension AsyncNetworkService {
